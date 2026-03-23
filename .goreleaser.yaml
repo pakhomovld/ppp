@@ -37,6 +37,7 @@ brews:
   - repository:
       owner: pakhomovld
       name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: https://github.com/pakhomovld/pp
     description: Universal pipe pretty-printer. Auto-detects format, adds color.
     license: MIT
