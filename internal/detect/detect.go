@@ -4,6 +4,7 @@ package detect
 type Format string
 
 const (
+	Binary    Format = "binary"
 	NDJSON    Format = "ndjson"
 	JSON      Format = "json"
 	YAML      Format = "yaml"
@@ -35,6 +36,10 @@ type Detector interface {
 func Detect(sample []byte) Result {
 	if len(sample) == 0 {
 		return Result{Format: Plain, Confidence: None}
+	}
+
+	if isBinary(sample) {
+		return Result{Format: Binary, Confidence: High}
 	}
 
 	detectors := []Detector{

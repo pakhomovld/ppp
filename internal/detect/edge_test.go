@@ -32,9 +32,9 @@ func TestEdge_BinaryGarbage(t *testing.T) {
 		input []byte
 		want  Format
 	}{
-		{"null bytes", []byte{0x00, 0x01, 0x02}, Plain},
+		{"null bytes", []byte{0x00, 0x01, 0x02}, Binary},
 		{"high bytes", []byte{0xFF, 0xFE, 0xFD, 0xFC}, Plain},
-		{"mixed garbage", []byte{0x80, 0x90, 0xA0, 0xB0, 0xC0}, Plain},
+		{"mixed with null", []byte{0x80, 0x00, 0xA0, 0xB0, 0xC0}, Binary},
 	}
 
 	for _, tt := range tests {
@@ -99,17 +99,18 @@ func TestEdge_BrokenXML(t *testing.T) {
 }
 
 func TestEdge_CSVQuotedFields(t *testing.T) {
-	// Fields with commas inside quotes — CSV detection may treat this as more columns.
+	// Fields with commas inside quotes must be properly counted.
 	input := `name,city,note
 "Alice","New York","hello, world"
 "Bob","LA","ok"
 "Carol","SF","fine"
 "Dave","CHI","great"`
 	r := Detect([]byte(input))
-	// Document: naive comma counting may miscount quoted fields.
-	// At minimum, it should not panic.
-	if r.Format == "" {
-		t.Error("Detect should return a format for quoted CSV")
+	if r.Format != CSV {
+		t.Errorf("Detect(quoted CSV).Format = %q, want csv", r.Format)
+	}
+	if r.Confidence < High {
+		t.Errorf("Detect(quoted CSV).Confidence = %v, want >= High", r.Confidence)
 	}
 }
 

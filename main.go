@@ -77,6 +77,11 @@ func run(cfg cmd.Config) (int, error) {
 		return 2, nil
 	}
 
+	if result.Format == detect.Binary {
+		fmt.Fprintln(os.Stderr, "ppp: binary data detected, not printing to terminal")
+		return 1, nil
+	}
+
 	formatter := format.ForFormat(result.Format)
 
 	var theme *ppcolor.Theme
