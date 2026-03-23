@@ -6,9 +6,9 @@ func TestNDJSONDetector(t *testing.T) {
 	d := &NDJSONDetector{}
 
 	tests := []struct {
-		name       string
-		input      string
-		wantConf   Confidence
+		name     string
+		input    string
+		wantConf Confidence
 	}{
 		{"two valid objects", "{\"a\":1}\n{\"b\":2}\n", High},
 		{"three valid objects", "{\"a\":1}\n{\"b\":2}\n{\"c\":3}", High},
