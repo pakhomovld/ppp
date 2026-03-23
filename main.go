@@ -6,11 +6,11 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/lpakhomov/pp/cmd"
-	ppcolor "github.com/lpakhomov/pp/internal/color"
-	"github.com/lpakhomov/pp/internal/detect"
-	"github.com/lpakhomov/pp/internal/format"
-	"github.com/lpakhomov/pp/internal/sniff"
+	"github.com/pakhomovld/pp/cmd"
+	ppcolor "github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/pp/internal/detect"
+	"github.com/pakhomovld/pp/internal/format"
+	"github.com/pakhomovld/pp/internal/sniff"
 )
 
 func main() {

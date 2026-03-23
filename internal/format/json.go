@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/lpakhomov/pp/internal/color"
+	"github.com/pakhomovld/pp/internal/color"
 )
 
 // JSONFormatter pretty-prints JSON with indentation and color.

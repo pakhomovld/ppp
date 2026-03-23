@@ -13,7 +13,7 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -s -w -X github.com/lpakhomov/pp/cmd.Version={{.Version}}
+      - -s -w -X github.com/pakhomovld/pp/cmd.Version={{.Version}}
 
 archives:
   - format: tar.gz
@@ -35,9 +35,9 @@ changelog:
 
 brews:
   - repository:
-      owner: lpakhomov
+      owner: pakhomovld
       name: homebrew-tap
-    homepage: https://github.com/lpakhomov/pp
+    homepage: https://github.com/pakhomovld/pp
     description: Universal pipe pretty-printer. Auto-detects format, adds color.
     license: MIT
     install: |

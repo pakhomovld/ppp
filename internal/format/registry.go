@@ -1,6 +1,6 @@
 package format
 
-import "github.com/lpakhomov/pp/internal/detect"
+import "github.com/pakhomovld/pp/internal/detect"
 
 // ForFormat returns the appropriate formatter for the given format.
 func ForFormat(f detect.Format) Formatter {

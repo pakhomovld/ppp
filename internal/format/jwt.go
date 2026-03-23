@@ -7,7 +7,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/lpakhomov/pp/internal/color"
+	"github.com/pakhomovld/pp/internal/color"
 )
 
 // JWTFormatter decodes and pretty-prints JWT header and payload.

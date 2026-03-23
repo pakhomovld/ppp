@@ -6,8 +6,8 @@ import (
 	"io"
 	"strings"
 
-	"github.com/lpakhomov/pp/internal/color"
-	"github.com/lpakhomov/pp/internal/detect"
+	"github.com/pakhomovld/pp/internal/color"
+	"github.com/pakhomovld/pp/internal/detect"
 )
 
 // CSVFormatter renders CSV/TSV data as an aligned table.

@@ -3,7 +3,7 @@ package format
 import (
 	"io"
 
-	"github.com/lpakhomov/pp/internal/color"
+	"github.com/pakhomovld/pp/internal/color"
 )
 
 // Formatter pretty-prints data from a reader to a writer.

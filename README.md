@@ -30,16 +30,16 @@ Unknown formats pass through unchanged.
 **Homebrew:**
 
 ```sh
-brew install lpakhomov/tap/pp
+brew install pakhomovld/tap/pp
 ```
 
 **Go:**
 
 ```sh
-go install github.com/lpakhomov/pp@latest
+go install github.com/pakhomovld/pp@latest
 ```
 
-**Binary:** Download from [GitHub Releases](https://github.com/lpakhomov/pp/releases).
+**Binary:** Download from [GitHub Releases](https://github.com/pakhomovld/pp/releases).
 
 ## Examples
 
@@ -167,7 +167,7 @@ Each detector returns a confidence score (High/Medium/Low/None). Highest confide
 ## Build from Source
 
 ```sh
-git clone https://github.com/lpakhomov/pp
+git clone https://github.com/pakhomovld/pp
 cd pp
 make build     # produces ./pp
 make test      # runs all tests
