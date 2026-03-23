@@ -55,6 +55,49 @@ func TestJSONFormatter_NoColor(t *testing.T) {
 	}
 }
 
+func TestJSONFormatter_DeepNesting(t *testing.T) {
+	f := &JSONFormatter{}
+	var buf bytes.Buffer
+	input := `{"a":{"b":{"c":{"d":"deep"}}}}`
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(buf.String(), `"deep"`) {
+		t.Error("deep nested value should be present")
+	}
+}
+
+func TestJSONFormatter_Unicode(t *testing.T) {
+	f := &JSONFormatter{}
+	var buf bytes.Buffer
+	input := `{"emoji":"🎉","japanese":"日本語"}`
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := buf.String()
+	if !strings.Contains(out, "🎉") {
+		t.Error("emoji should be preserved")
+	}
+	if !strings.Contains(out, "日本語") {
+		t.Error("unicode text should be preserved")
+	}
+}
+
+func TestJSONFormatter_NullValues(t *testing.T) {
+	f := &JSONFormatter{}
+	var buf bytes.Buffer
+	input := `{"a":null,"b":[null,1,null]}`
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(buf.String(), "null") {
+		t.Error("null values should be preserved")
+	}
+}
+
 func TestJSONFormatter_InvalidJSON(t *testing.T) {
 	f := &JSONFormatter{}
 	var buf bytes.Buffer

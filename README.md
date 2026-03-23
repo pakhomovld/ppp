@@ -41,9 +41,9 @@ brew install pakhomovld/tap/ppp
 go install github.com/pakhomovld/pp@latest
 ```
 
-The Go module is named `pp` but the binary it produces is `ppp`.
+The module path is `pp`; the binary is `ppp` (one more `p` for *pretty*).
 
-**Binary:** Download from [GitHub Releases](https://github.com/pakhomovld/pp/releases).
+**Binary:** Download from [GitHub Releases](https://github.com/pakhomovld/ppp/releases).
 
 ## Examples
 
@@ -88,14 +88,36 @@ echo 'user=john%40example.com&token=abc&active=true' | ppp
   user   = john@example.com
 ```
 
+## Real-World Usage
+
+```sh
+kubectl get pods -o yaml | ppp
+curl -s https://api.github.com/users/octocat | ppp
+journalctl -u nginx -n 50 | ppp
+echo $JWT_TOKEN | ppp
+pbpaste | ppp
+cat mystery-file.txt | ppp --inspect
+curl -s api.example.com/data | ppp --strict
+```
+
 ## Flags
 
 ```
 --format, -f <fmt>   Force a specific format (skip auto-detection)
+--inspect            Output detection metadata as JSON, then exit
+--strict             Exit 2 if detection confidence is low or none
 --no-color           Disable colored output
 --version, -v        Print version
 --help, -h           Print help
 ```
+
+### Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | I/O or format error |
+| 2 | Low confidence (only with `--strict`) |
 
 Color is automatically disabled when:
 - stdout is not a terminal (piping to a file or another command)
@@ -131,11 +153,23 @@ Color is automatically disabled when:
 
 Each detector returns a confidence score (High/Medium/Low/None). Highest confidence wins. On ties, earlier detector wins.
 
+## Detection Notes
+
+| Input | Detected As | Why |
+|-------|-------------|-----|
+| `"Dear John: hope you are well"` | Plain | Single `key: value` is too ambiguous for YAML |
+| `"<root><unclosed"` | XML (medium) | Starts with `<`, partial tags detected |
+| Long English words | Plain | Not enough base64 signals (min 20 chars + decodable) |
+| Binary / null bytes | Plain | Non-UTF-8 content falls through |
+| Whitespace-only | Plain | Empty after trim |
+
+Use `--inspect` to see what `ppp` detected and how confident it is.
+
 ## Build from Source
 
 ```sh
-git clone https://github.com/pakhomovld/pp
-cd pp
+git clone https://github.com/pakhomovld/ppp
+cd ppp
 make build     # produces ./ppp
 make test      # runs all tests
 make install   # copies to /usr/local/bin

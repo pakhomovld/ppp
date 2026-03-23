@@ -20,9 +20,9 @@ func TestDetect_JSON(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := Detect([]byte(tt.input))
+			got := Detect([]byte(tt.input)).Format
 			if got != tt.want {
-				t.Errorf("Detect(%q) = %q, want %q", tt.input, got, tt.want)
+				t.Errorf("Detect(%q).Format = %q, want %q", tt.input, got, tt.want)
 			}
 		})
 	}

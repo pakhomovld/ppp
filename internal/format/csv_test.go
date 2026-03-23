@@ -31,6 +31,31 @@ func TestCSVFormatter_NoColor(t *testing.T) {
 	}
 }
 
+func TestCSVFormatter_QuotedFields(t *testing.T) {
+	input := "name,city\n\"Alice\",\"New York\"\n\"Bob\",\"LA\"\n"
+	f := &CSVFormatter{Dialect: detect.CSV}
+	var buf bytes.Buffer
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := buf.String()
+	if !strings.Contains(out, "Alice") {
+		t.Error("output should contain 'Alice'")
+	}
+}
+
+func TestCSVFormatter_EmptyCells(t *testing.T) {
+	input := "a,b,c\n1,,3\n,2,\n"
+	f := &CSVFormatter{Dialect: detect.CSV}
+	var buf bytes.Buffer
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Should not error on empty cells.
+}
+
 func TestCSVFormatter_TSV(t *testing.T) {
 	input := "name\tage\nAlice\t30\nBob\t25\n"
 

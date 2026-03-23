@@ -48,6 +48,28 @@ func TestNewReader_LargeInput(t *testing.T) {
 	}
 }
 
+func TestNewReader_ExactBoundary(t *testing.T) {
+	// Exactly DefaultSize bytes.
+	input := strings.Repeat("a", DefaultSize)
+	sr, err := NewReader(strings.NewReader(input), DefaultSize)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	sample := sr.Sample()
+	if len(sample) != DefaultSize {
+		t.Errorf("Sample() len = %d, want %d", len(sample), DefaultSize)
+	}
+
+	all, err := io.ReadAll(sr.Reader())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(all) != input {
+		t.Errorf("Reader() produced %d bytes, want %d", len(all), len(input))
+	}
+}
+
 func TestNewReader_Empty(t *testing.T) {
 	sr, err := NewReader(strings.NewReader(""), DefaultSize)
 	if err != nil {

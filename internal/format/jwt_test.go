@@ -33,3 +33,31 @@ func TestJWTFormatter_NoColor(t *testing.T) {
 		t.Error("output should contain 'Signature:'")
 	}
 }
+
+func TestJWTFormatter_MalformedPassthrough(t *testing.T) {
+	f := &JWTFormatter{}
+	var buf bytes.Buffer
+	input := "not.a.jwt"
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Malformed JWT should still produce some output (decode error or passthrough).
+	if buf.Len() == 0 {
+		t.Error("malformed JWT should produce output")
+	}
+}
+
+func TestJWTFormatter_TwoSegments(t *testing.T) {
+	f := &JWTFormatter{}
+	var buf bytes.Buffer
+	input := "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0"
+	err := f.Format(&buf, strings.NewReader(input), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Not a valid JWT (2 parts) — should passthrough.
+	if buf.String() != input {
+		t.Errorf("2-segment JWT should pass through, got %q", buf.String())
+	}
+}

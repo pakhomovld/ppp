@@ -43,14 +43,14 @@ func (f *Base64Formatter) Format(w io.Writer, r io.Reader, theme *color.Theme) e
 	}
 
 	// Detect the inner format.
-	innerFormat := detect.Detect(decoded)
+	innerResult := detect.Detect(decoded)
 
-	label := fmt.Sprintf("[base64 decoded → %s]", innerFormat)
+	label := fmt.Sprintf("[base64 decoded → %s]", innerResult.Format)
 	if theme != nil {
 		label = theme.Sprint(color.Comment, label)
 	}
 	fmt.Fprintln(w, label)
 
-	formatter := ForFormat(innerFormat)
+	formatter := ForFormat(innerResult.Format)
 	return formatter.Format(w, strings.NewReader(string(decoded)), theme)
 }

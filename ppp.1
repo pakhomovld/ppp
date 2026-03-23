@@ -20,6 +20,18 @@ Valid values:
 .BR json ", " yaml ", " csv ", " tsv ", " xml ", " html ", "
 .BR toml ", " jwt ", " base64 ", " urlencoded ", " log .
 .TP
+.B \-\-inspect
+Output detection metadata as JSON to stdout, then exit. The output is a JSON
+object with
+.B format
+and
+.B confidence
+fields.
+.TP
+.B \-\-strict
+Exit with status 2 if detection confidence is low or none. Can be combined with
+.BR \-\-inspect .
+.TP
 .B \-\-no\-color
 Disable colored output.
 .TP
@@ -104,8 +116,12 @@ Success.
 .TP
 .B 1
 An error occurred reading stdin or formatting output.
+.TP
+.B 2
+Low detection confidence (only with
+.BR \-\-strict ).
 .SH HOMEPAGE
-.UR https://github.com/pakhomovld/pp
+.UR https://github.com/pakhomovld/ppp
 .UE
 .SH LICENSE
 MIT

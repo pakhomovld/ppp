@@ -31,9 +31,9 @@ type Detector interface {
 }
 
 // Detect runs all detectors in priority order and returns the best match.
-func Detect(sample []byte) Format {
+func Detect(sample []byte) Result {
 	if len(sample) == 0 {
-		return Plain
+		return Result{Format: Plain, Confidence: None}
 	}
 
 	detectors := []Detector{
@@ -58,5 +58,5 @@ func Detect(sample []byte) Format {
 			break
 		}
 	}
-	return best.Format
+	return best
 }

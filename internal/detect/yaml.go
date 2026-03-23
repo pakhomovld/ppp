@@ -44,10 +44,10 @@ func (d *YAMLDetector) Detect(sample []byte) Result {
 		}
 	}
 
-	if matches >= 2 {
+	if matches >= 3 {
 		return Result{Format: YAML, Confidence: Medium}
 	}
-	if matches == 1 && len(lines) <= 3 {
+	if matches == 2 {
 		return Result{Format: YAML, Confidence: Low}
 	}
 

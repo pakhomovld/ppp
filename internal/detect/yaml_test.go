@@ -12,7 +12,8 @@ func TestYAMLDetector(t *testing.T) {
 	}{
 		{"document separator", "---\nname: test", High},
 		{"key-value pairs", "name: test\nage: 30\ncity: NYC", Medium},
-		{"single key", "name: test", Low},
+		{"two keys", "name: test\nage: 30", Low},
+		{"single key", "name: test", None},
 		{"json object", `{"key": "value"}`, None},
 		{"xml", `<root><child/></root>`, None},
 		{"empty", "", None},

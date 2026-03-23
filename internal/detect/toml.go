@@ -20,11 +20,11 @@ func (d *TOMLDetector) Detect(sample []byte) Result {
 	}
 
 	// Skip JSON and XML.
-	if trimmed[0] == '{' || trimmed[0] == '[' && trimmed[1] != '[' {
-		// Bare `[` could be TOML section, but `{` is JSON.
-		if trimmed[0] == '{' {
-			return Result{Format: TOML, Confidence: None}
-		}
+	if trimmed[0] == '{' {
+		return Result{Format: TOML, Confidence: None}
+	}
+	if trimmed[0] == '[' && (len(trimmed) < 2 || trimmed[1] != '[') {
+		// Bare `[` could be TOML section — let it fall through to regex check.
 	}
 	if trimmed[0] == '<' {
 		return Result{Format: TOML, Confidence: None}
