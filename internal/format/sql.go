@@ -102,7 +102,7 @@ func tokenizeSQL(input string) []sqlToken {
 				tokens = append(tokens, sqlToken{sqlComment, input[i:]})
 				break
 			}
-			tokens = append(tokens, sqlToken{sqlComment, input[i:i+2+end+2]})
+			tokens = append(tokens, sqlToken{sqlComment, input[i : i+2+end+2]})
 			i += 2 + end + 2
 			continue
 		}
